@@ -1,0 +1,42 @@
+name: manage-azure-policy-10fdbe3e
+on:
+  workflow_dispatch:
+    inputs:
+      remarks:
+        description: 'Reason for triggering the workflow run'
+        required: false
+        default: 'Updating Azure Policies'
+
+
+## Uncomment the following if you wish to automatically trigger workflow run with every commit
+#
+#  push:
+#    paths:
+#      - 'Tags/policies/Add_tag_ProjectCostCode_to_resource_group_addTagToRG_ProjectCostCode/**'
+#      - 'Tags/policies/Add_tag_Environment_to_resource_group_addTagToRG_Environment/**'
+#      - 'Tags/policies/Add_tag_BusinessOwner_to_resource_group_addTagToRG_BusinessOwner/**'
+#      - 'Tags/policies/Add_tag_BusinessUnit_to_resource_group_addTagToRG_BusinessUnit/**'
+#      - 'Tags/policies/Add_tag_ManagedBy_to_resource_group_addTagToRG_ManagedBy/**'
+#      - 'Tags/policies/Add_tag_GT_SPOC_to_resource_group_addTagToRG_GT_SPOC/**'
+#      - .github/workflows/manage-azure-policy-10fdbe3e.yml
+jobs:
+  apply-azure-policy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS_10fdbe3e}}
+        allow-no-subscriptions: true
+    - name: Create or Update Azure Policies
+      uses: azure/manage-azure-policy@v0
+      with:
+        paths: |
+          Tags/policies/Add_tag_ProjectCostCode_to_resource_group_addTagToRG_ProjectCostCode/**
+          Tags/policies/Add_tag_Environment_to_resource_group_addTagToRG_Environment/**
+          Tags/policies/Add_tag_BusinessOwner_to_resource_group_addTagToRG_BusinessOwner/**
+          Tags/policies/Add_tag_BusinessUnit_to_resource_group_addTagToRG_BusinessUnit/**
+          Tags/policies/Add_tag_ManagedBy_to_resource_group_addTagToRG_ManagedBy/**
+          Tags/policies/Add_tag_GT_SPOC_to_resource_group_addTagToRG_GT_SPOC/**
